@@ -11,7 +11,7 @@
       <div if={ opts.append } data-is={ opts.append } class="input-group-append" />
       <yield from="append" />
     </div>
-    
+
     <div class="input-group" if={ ['textarea'].includes(opts.type) }>
       <div if={ opts.prepend } data-is={ opts.prepend } class="input-group-prepend" />
       <yield from="prepend" />
@@ -54,7 +54,7 @@
       <div if={ opts.prepend } data-is={ opts.prepend } class="input-group-prepend" />
       <yield from="prepend" />
       <select autocomplete={ opts.autocomplete } id={ opts.name } name={ opts.name } onchange={ onChange } class="{ opts.inputClass || 'form-control' } { 'is-invalid' : isValid() === false, 'is-valid' : isValid() === true }" multiple={ opts.multiple } required={ opts.required } placeholder={ opts.placeholder || opts.label }>
-        <option value="" if={ opts.label }>Select { opts.label }</option>
+        <option value="" if={ opts.selectext }>{ opts.selectext }</option>
         <option each={ option, i in opts.options } value={ option.value } selected={ (this.value || []).includes(option.value) }>{ option.label }</option>
       </select>
       <div if={ opts.append } data-is={ opts.append } class="input-group-append" />
@@ -80,7 +80,7 @@
   <script>
     // uuid
     const uuid = require('uuid');
-    
+
     // set value
     this.uuid      = uuid();
     this.value     = opts.value || opts.dataValue;
@@ -192,7 +192,7 @@
       // set value
       this.value = jQuery(e.target).val();
       this.valueChanged = true;
-      
+
       // set value
       this.value = ['checkbox'].includes(opts.type) ? (jQuery(e.target).is(':checked') ? jQuery(e.target).val() : null) : e.target.value;
 
@@ -276,7 +276,7 @@
 
       // check validated
       if (opts.validated) this.validated = true;
-      
+
     });
 
     /**
@@ -285,7 +285,7 @@
     this.on('mount', () => {
       // check parent
       if (!this.eden.frontend) return;
-      
+
     });
 
     /**
@@ -294,7 +294,7 @@
     this.on('unmount', () => {
       // check parent
       if (!this.eden.frontend) return;
-      
+
     });
 
   </script>
