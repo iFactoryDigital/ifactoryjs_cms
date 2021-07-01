@@ -565,14 +565,6 @@
         this.dragula.containers = jQuery('.eden-dropzone', this.refs.placement).toArray();
       });
     }
-    
-    /**
-     * should update
-     */
-    shouldUpdate() {
-      // return mounting
-      return !this.mounting;
-    }
 
     /**
      * on update
@@ -587,7 +579,7 @@
       this.preview = !!(!this.acl.validate('admin') || opts.preview);
 
       // check type
-      if (this.helper.hasChange() && !this.mounting) {
+      if (this.helper.hasChange()) {
         // trigger mount
         this.trigger('mount');
       }
@@ -598,12 +590,9 @@
      *
      * @type {mount}
      */
-    this.on('mount', async () => {
+    this.on('mount', () => {
       // check frontend
       if (!this.eden.frontend) return;
-
-      // mounting
-      this.mounting = true;
 
       // set placement
       this.placement = opts.placement ? (opts.model ? this.parent.placement : this.model('placement', opts.placement)) : this.model('placement', {
@@ -620,7 +609,7 @@
         this.placement.set('fields', (this.placement.get('placements') || []).reduce(this.filter.this.filter.flatten, []));
 
         // save fields
-        await this.savePlacement();
+        this.savePlacement();
       }
 
       // set placements
@@ -638,19 +627,16 @@
             'position' : opts.position
           });
         }
+
+        // force update
+        this.helper.update();
       }
 
       // check fields
-      //if (this.helper.shouldLoad()) {
+      if (this.helper.shouldLoad()) {
         // load fields
-        await this.loadBlocks();
-      //}
-
-      // reset mounting
-      this.mounting = false;
-
-      // force update
-      this.helper.update();
+        this.loadBlocks();
+      }
     });
   </script>
 </eden-blocks>
